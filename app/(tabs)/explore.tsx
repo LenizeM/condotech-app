@@ -87,7 +87,16 @@ export default function TasksScreen() {
           <View style={styles.card}>
             <Text style={styles.taskTitle}>{item.titulo}</Text>
 
-            <Text style={styles.status}>Status: {item.status}</Text>
+            <Text
+              style={[
+                styles.statusBadge,
+                item.status === 'Pendente' && styles.statusPendente,
+                item.status === 'Em andamento' && styles.statusAndamento,
+                item.status === 'Concluído' && styles.statusConcluido,
+              ]}
+            >
+              {item.status}
+            </Text>
 
             <TouchableOpacity
               style={styles.updateButton}
@@ -179,4 +188,29 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontWeight: 'bold',
   },
+
+  statusBadge: {
+  alignSelf: 'flex-start',
+  paddingVertical: 6,
+  paddingHorizontal: 10,
+  borderRadius: 20,
+  fontSize: 13,
+  fontWeight: 'bold',
+  color: '#fff',
+  marginTop: 6,
+},
+
+statusPendente: {
+  backgroundColor: '#f0ad4e',
+},
+
+statusAndamento: {
+  backgroundColor: '#0a7ea4',
+},
+
+statusConcluido: {
+  backgroundColor: '#28a745',
+},
+
+
 });
