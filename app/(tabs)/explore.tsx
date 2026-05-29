@@ -86,7 +86,7 @@ export default function TasksScreen() {
         style={styles.addButton}
         onPress={() => router.push('/nova-tarefa')}
       >
-        <Text style={styles.addButtonText}>+ Nova Tarefa</Text>
+        <Text style={styles.addButtonText}>➕ Nova Tarefa</Text>
       </TouchableOpacity>
 
       <FlatList
@@ -94,7 +94,7 @@ export default function TasksScreen() {
         keyExtractor={(item) => String(item.id)}
         renderItem={({ item }) => (
           <View style={styles.card}>
-            <Text style={styles.taskTitle}>{item.titulo}</Text>
+            <Text style={styles.taskTitle}>🔧 {item.titulo}</Text>
 
             <Text
               style={[
@@ -142,11 +142,19 @@ const styles = StyleSheet.create({
   },
 
   card: {
-    backgroundColor: '#fff',
-    padding: 16,
-    borderRadius: 12,
-    marginBottom: 12,
+  backgroundColor: '#fff',
+  padding: 16,
+  borderRadius: 14,
+  marginBottom: 14,
+  shadowColor: '#000',
+  shadowOffset: {
+    width: 0,
+    height: 2,
   },
+  shadowOpacity: 0.1,
+  shadowRadius: 4,
+  elevation: 3,
+},
 
   taskTitle: {
     fontSize: 18,
@@ -159,12 +167,20 @@ const styles = StyleSheet.create({
   },
 
   addButton: {
-    backgroundColor: '#0a7ea4',
-    padding: 14,
-    borderRadius: 10,
-    marginBottom: 20,
-    alignItems: 'center',
+  backgroundColor: '#0a7ea4',
+  padding: 16,
+  borderRadius: 14,
+  marginBottom: 20,
+  alignItems: 'center',
+  shadowColor: '#000',
+  shadowOffset: {
+    width: 0,
+    height: 2,
   },
+  shadowOpacity: 0.15,
+  shadowRadius: 4,
+  elevation: 3,
+},
 
   addButtonText: {
     color: '#fff',

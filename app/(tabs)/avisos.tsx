@@ -8,7 +8,7 @@ export default function AvisosScreen() {
       <View style={styles.card}>
         <Text style={styles.cardTitle}>Festa Junina Sol e Praia</Text>
 
-        <Text style={styles.date}>30 de maio • a partir das 18h30</Text>
+        <Text style={styles.date}>06 de Junho • a partir das 18h30</Text>
 
         <Text style={styles.description}>
           A Administração informa que será realizado o Forró do Condomínio na área externa
@@ -25,7 +25,7 @@ export default function AvisosScreen() {
       <View style={styles.card}>
         <Text style={styles.cardTitle}>Dedetização nas áreas comuns</Text>
 
-        <Text style={styles.date}>03 de junho</Text>
+        <Text style={styles.date}>09 de junho</Text>
 
         <Text style={styles.description}>
           Informamos que será realizada dedetização nas áreas comuns do condomínio.
