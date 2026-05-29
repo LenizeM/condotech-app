@@ -1,112 +1,182 @@
-import { Image } from 'expo-image';
-import { Platform, StyleSheet } from 'react-native';
+import {
+  FlatList,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 
-import { Collapsible } from '@/components/ui/collapsible';
-import { ExternalLink } from '@/components/external-link';
-import ParallaxScrollView from '@/components/parallax-scroll-view';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { IconSymbol } from '@/components/ui/icon-symbol';
-import { Fonts } from '@/constants/theme';
+import { router, useFocusEffect } from 'expo-router';
+import * as SQLite from 'expo-sqlite';
+import { useCallback, useEffect, useState } from 'react';
 
-export default function TabTwoScreen() {
+const db = SQLite.openDatabaseSync('condotech.db');
+
+type Tarefa = {
+  id: number;
+  titulo: string;
+  status: string;
+};
+
+export default function TasksScreen() {
+  const [tarefas, setTarefas] = useState<Tarefa[]>([]);
+
+  function criarTabela() {
+    db.execSync(`
+      CREATE TABLE IF NOT EXISTS tarefas (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        titulo TEXT,
+        status TEXT
+      );
+    `);
+  }
+
+  function carregarTarefas() {
+    const resultado = db.getAllSync('SELECT * FROM tarefas') as Tarefa[];
+    setTarefas(resultado);
+  }
+
+  useEffect(() => {
+    criarTabela();
+    carregarTarefas();
+  }, []);
+
+  useFocusEffect(
+    useCallback(() => {
+      carregarTarefas();
+    }, [])
+  );
+
+  function excluirTarefa(id: number) {
+    db.runSync('DELETE FROM tarefas WHERE id = ?', [id]);
+    carregarTarefas();
+  }
+
+  function atualizarStatus(tarefa: Tarefa) {
+    let novoStatus = 'Pendente';
+
+    if (tarefa.status === 'Pendente') {
+      novoStatus = 'Em andamento';
+    } else if (tarefa.status === 'Em andamento') {
+      novoStatus = 'Concluído';
+    }
+
+    db.runSync(
+      'UPDATE tarefas SET status = ? WHERE id = ?',
+      [novoStatus, tarefa.id]
+    );
+
+    carregarTarefas();
+  }
+
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#D0D0D0', dark: '#353636' }}
-      headerImage={
-        <IconSymbol
-          size={310}
-          color="#808080"
-          name="chevron.left.forwardslash.chevron.right"
-          style={styles.headerImage}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText
-          type="title"
-          style={{
-            fontFamily: Fonts.rounded,
-          }}>
-          Explore
-        </ThemedText>
-      </ThemedView>
-      <ThemedText>This app includes example code to help you get started.</ThemedText>
-      <Collapsible title="File-based routing">
-        <ThemedText>
-          This app has two screens:{' '}
-          <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> and{' '}
-          <ThemedText type="defaultSemiBold">app/(tabs)/explore.tsx</ThemedText>
-        </ThemedText>
-        <ThemedText>
-          The layout file in <ThemedText type="defaultSemiBold">app/(tabs)/_layout.tsx</ThemedText>{' '}
-          sets up the tab navigator.
-        </ThemedText>
-        <ExternalLink href="https://docs.expo.dev/router/introduction">
-          <ThemedText type="link">Learn more</ThemedText>
-        </ExternalLink>
-      </Collapsible>
-      <Collapsible title="Android, iOS, and web support">
-        <ThemedText>
-          You can open this project on Android, iOS, and the web. To open the web version, press{' '}
-          <ThemedText type="defaultSemiBold">w</ThemedText> in the terminal running this project.
-        </ThemedText>
-      </Collapsible>
-      <Collapsible title="Images">
-        <ThemedText>
-          For static images, you can use the <ThemedText type="defaultSemiBold">@2x</ThemedText> and{' '}
-          <ThemedText type="defaultSemiBold">@3x</ThemedText> suffixes to provide files for
-          different screen densities
-        </ThemedText>
-        <Image
-          source={require('@/assets/images/react-logo.png')}
-          style={{ width: 100, height: 100, alignSelf: 'center' }}
-        />
-        <ExternalLink href="https://reactnative.dev/docs/images">
-          <ThemedText type="link">Learn more</ThemedText>
-        </ExternalLink>
-      </Collapsible>
-      <Collapsible title="Light and dark mode components">
-        <ThemedText>
-          This template has light and dark mode support. The{' '}
-          <ThemedText type="defaultSemiBold">useColorScheme()</ThemedText> hook lets you inspect
-          what the user&apos;s current color scheme is, and so you can adjust UI colors accordingly.
-        </ThemedText>
-        <ExternalLink href="https://docs.expo.dev/develop/user-interface/color-themes/">
-          <ThemedText type="link">Learn more</ThemedText>
-        </ExternalLink>
-      </Collapsible>
-      <Collapsible title="Animations">
-        <ThemedText>
-          This template includes an example of an animated component. The{' '}
-          <ThemedText type="defaultSemiBold">components/HelloWave.tsx</ThemedText> component uses
-          the powerful{' '}
-          <ThemedText type="defaultSemiBold" style={{ fontFamily: Fonts.mono }}>
-            react-native-reanimated
-          </ThemedText>{' '}
-          library to create a waving hand animation.
-        </ThemedText>
-        {Platform.select({
-          ios: (
-            <ThemedText>
-              The <ThemedText type="defaultSemiBold">components/ParallaxScrollView.tsx</ThemedText>{' '}
-              component provides a parallax effect for the header image.
-            </ThemedText>
-          ),
-        })}
-      </Collapsible>
-    </ParallaxScrollView>
+    <View style={styles.container}>
+      <Text style={styles.title}>Tarefas do Condomínio</Text>
+
+      <TouchableOpacity
+        style={styles.addButton}
+        onPress={() => router.push('/nova-tarefa')}
+      >
+        <Text style={styles.addButtonText}>+ Nova Tarefa</Text>
+      </TouchableOpacity>
+
+      <FlatList
+        data={tarefas}
+        keyExtractor={(item) => String(item.id)}
+        renderItem={({ item }) => (
+          <View style={styles.card}>
+            <Text style={styles.taskTitle}>{item.titulo}</Text>
+
+            <Text style={styles.status}>Status: {item.status}</Text>
+
+            <TouchableOpacity
+              style={styles.updateButton}
+              onPress={() => atualizarStatus(item)}
+            >
+              <Text style={styles.updateButtonText}>Alterar Status</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.deleteButton}
+              onPress={() => excluirTarefa(item.id)}
+            >
+              <Text style={styles.deleteButtonText}>Excluir</Text>
+            </TouchableOpacity>
+          </View>
+        )}
+      />
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  headerImage: {
-    color: '#808080',
-    bottom: -90,
-    left: -35,
-    position: 'absolute',
+  container: {
+    flex: 1,
+    backgroundColor: '#f5f5f5',
+    padding: 20,
   },
-  titleContainer: {
-    flexDirection: 'row',
-    gap: 8,
+
+  title: {
+    fontSize: 26,
+    fontWeight: 'bold',
+    marginBottom: 20,
+    marginTop: 20,
+  },
+
+  card: {
+    backgroundColor: '#fff',
+    padding: 16,
+    borderRadius: 12,
+    marginBottom: 12,
+  },
+
+  taskTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 6,
+  },
+
+  status: {
+    fontSize: 14,
+  },
+
+  addButton: {
+    backgroundColor: '#0a7ea4',
+    padding: 14,
+    borderRadius: 10,
+    marginBottom: 20,
+    alignItems: 'center',
+  },
+
+  addButtonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+
+  deleteButton: {
+    backgroundColor: '#d9534f',
+    padding: 10,
+    borderRadius: 8,
+    marginTop: 10,
+    alignItems: 'center',
+  },
+
+  deleteButtonText: {
+    color: '#fff',
+    fontWeight: 'bold',
+  },
+
+  updateButton: {
+    backgroundColor: '#f0ad4e',
+    padding: 10,
+    borderRadius: 8,
+    marginTop: 10,
+    alignItems: 'center',
+  },
+
+  updateButtonText: {
+    color: '#fff',
+    fontWeight: 'bold',
   },
 });
