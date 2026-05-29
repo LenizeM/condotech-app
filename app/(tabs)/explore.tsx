@@ -71,7 +71,16 @@ export default function TasksScreen() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Tarefas do Condomínio</Text>
+      <View style={styles.header}>
+        <Text style={styles.title}>
+          CondoTech
+        </Text>
+
+        <Text style={styles.subtitle}>
+          Gestão das tarefas do condomínio
+        </Text>
+      </View>
+    
 
       <TouchableOpacity
         style={styles.addButton}
@@ -212,5 +221,15 @@ statusConcluido: {
   backgroundColor: '#28a745',
 },
 
+header: {
+  marginTop: 20,
+  marginBottom: 20,
+},
+
+subtitle: {
+  fontSize: 15,
+  color: '#666',
+  marginTop: 5,
+},
 
 });
