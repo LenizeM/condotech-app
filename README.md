@@ -1,50 +1,128 @@
-# Welcome to your Expo app 👋
+# 🏢 CondoTech - Gestão de Condomínio
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Aplicativo mobile desenvolvido em **React Native com Expo** para auxiliar na **gestão de tarefas e comunicados de condomínios**, 
+permitindo o acompanhamento de manutenções, avisos importantes e organização das atividades do condomínio.
 
-## Get started
+O projeto foi desenvolvido com foco em **usabilidade, persistência local de dados e gerenciamento de tarefas**, simulando uma aplicação real utilizada por administradores e moradores.
 
-1. Install dependencies
+---
 
-   ```bash
-   npm install
-   ```
+## 📱 Funcionalidades
 
-2. Start the app
+### ✅ Gestão de Tarefas do Condomínio
 
-   ```bash
-   npx expo start
-   ```
+Permite cadastrar, visualizar, atualizar e excluir tarefas relacionadas ao condomínio, como:
 
-In the output, you'll find options to open the app in a
+* Limpeza da piscina;
+* Dedetização;
+* Capinagem de terrenos;
+* Limpeza das áreas comuns;
+* Manutenções gerais.
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+### 📢 Comunicados aos Moradores
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+Tela dedicada para avisos importantes do condomínio, como:
 
-## Get a fresh project
+* Eventos internos (ex.: Festa Junina do condomínio);
+* Avisos de manutenção;
+* Dedetização das áreas comuns;
+* Informações administrativas.
 
-When you're ready, run:
+### 🔄 CRUD Completo
+
+O aplicativo implementa as quatro operações fundamentais:
+
+* **Create** → Criar tarefas;
+* **Read** → Visualizar tarefas;
+* **Update** → Alterar status das tarefas;
+* **Delete** → Excluir tarefas.
+
+### 💾 Persistência de Dados
+
+As informações são armazenadas localmente utilizando **SQLite**, permitindo que os dados permaneçam salvos mesmo após fechar o aplicativo.
+
+---
+
+## 🛠️ Tecnologias Utilizadas
+
+* **React Native**
+* **Expo**
+* **Expo Router**
+* **TypeScript**
+* **SQLite (expo-sqlite)**
+* **React Hooks**
+
+  * `useState`
+  * `useEffect`
+  * `useFocusEffect`
+
+---
+
+## 🎯 Objetivo do Projeto
+
+O objetivo do aplicativo é facilitar a comunicação e organização das atividades de um condomínio, permitindo uma administração mais eficiente das tarefas e comunicados destinados aos moradores.
+
+O sistema foi pensado para um cenário real, inspirado em rotinas condominiais, incluindo eventos, manutenção preventiva e acompanhamento de serviços.
+
+---
+
+## 📸 Telas do Aplicativo
+
+### 🏠 Home
+
+Tela inicial com visão geral do condomínio e resumo rápido das atividades.
+
+### 📢 Avisos
+
+Tela destinada à divulgação de comunicados importantes aos moradores.
+
+### 📋 Tarefas
+
+Área responsável pela gestão das tarefas do condomínio.
+
+Funcionalidades:
+
+* Criar tarefa;
+* Atualizar status;
+* Excluir tarefa;
+* Persistência local com SQLite.
+
+---
+
+## ▶️ Como Executar o Projeto
+
+### 1. Clonar o repositório
 
 ```bash
-npm run reset-project
+git clone https://github.com/LenizeM/condotech-app.git
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+### 2. Entrar na pasta do projeto
 
-## Learn more
+```bash
+cd condotech-app
+```
 
-To learn more about developing your project with Expo, look at the following resources:
+### 3. Instalar dependências
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+```bash
+npm install
+```
 
-## Join the community
+### 4. Iniciar aplicação
 
-Join our community of developers creating universal apps.
+```bash
+npx expo start
+```
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+### 5. Executar no celular
+
+Baixe o aplicativo **Expo Go** no celular e escaneie o QR Code exibido no terminal.
+
+---
+
+## 👩‍💻 Desenvolvido por
+
+**Lenize Malheiros**
+
+Projeto acadêmico desenvolvido para a disciplina de Programação Para Dispositivos Móveis em Android utilizando **React Native**.
