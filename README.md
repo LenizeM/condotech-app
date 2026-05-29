@@ -71,18 +71,21 @@ O sistema foi pensado para um cenário real, inspirado em rotinas condominiais, 
 ### 🏠 Home
 
 Tela inicial com visão geral do condomínio e resumo rápido das atividades.
+
 <img width="280" height="611" alt="image" src="https://github.com/user-attachments/assets/2a3c12bb-413c-42eb-920e-6811cc7f9a7f" />
 
 
 ### 📢 Avisos
 
 Tela destinada à divulgação de comunicados importantes aos moradores.
+
 <img width="280" height="614" alt="image" src="https://github.com/user-attachments/assets/1ab54dbe-5b64-470d-9273-e57ef42f0c18" />
 
 
 ### 📋 Tarefas
 
 Área responsável pela gestão das tarefas do condomínio.
+
 <img width="276" height="612" alt="image" src="https://github.com/user-attachments/assets/3e023862-ecf5-4efe-a6b9-ad1f868c09b2" />
 
 
