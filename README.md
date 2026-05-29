@@ -89,6 +89,7 @@ Tela destinada à divulgação de comunicados importantes aos moradores.
 <img width="276" height="612" alt="image" src="https://github.com/user-attachments/assets/3e023862-ecf5-4efe-a6b9-ad1f868c09b2" />
 
 
+
 Funcionalidades:
 
 * Criar tarefa;
